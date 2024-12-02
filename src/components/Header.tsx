@@ -14,19 +14,32 @@ import { Search } from "./Search";
 import { FaGithub } from "react-icons/fa";
 import { AddIcon } from "@chakra-ui/icons";
 import { Filters } from "./Filters";
+import { Link as GatsbyLink } from "gatsby";
 
-export const Header = () => {
+export const Header = ({ showSearch = true, showFilters = true }) => {
   const { handleConnect, isConnected, address } = useContext(Web3Context);
   return (
     <Flex
-      pb="2"
+      as="header"
+      flexShrink="0"
+      py="3"
+      px="8"
       flexDirection={{ base: "column", md: "row" }}
       justifyContent="space-between"
+      backdropFilter="auto"
+      backdropBlur="1.25rem"
+      position="fixed"
+      top="0"
+      left="0"
+      width="100%"
+      zIndex="sticky"
     >
-      <Heading>Chainlist</Heading>
-      <Search />
+      <GatsbyLink to="/">
+        <Heading as="h1">Chainlist</Heading>
+      </GatsbyLink>
+      {showSearch && <Search />}
       <Flex>
-        <Filters />
+        {showFilters && <Filters />}
         <Tooltip label="Add Network">
           <Link
             href="https://github.com/ethereum-lists/chains/pulls"
@@ -52,7 +65,7 @@ export const Header = () => {
             size="lg"
             onClick={handleConnect}
           >
-            Connect Wallet
+            Connect
           </Button>
         ) : (
           <Button size="lg" w={{ base: "100%", md: "auto" }}>

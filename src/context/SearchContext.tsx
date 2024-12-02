@@ -19,16 +19,20 @@ export const SearchProvider = ({ children }) => {
 
   const [query, setQuery] = useState("");
   const [showTestnets, setShowTestnets] = useState(
-    defaults?.showTestnets ?? false
+    defaults?.showTestnets ?? true
   );
   const [showDeprecated, setShowDeprecated] = useState(
     defaults?.showDeprecated ?? false
   );
 
+  const [showFlagged, setShowFlagged] = useState(
+    defaults?.showFlagged ?? false
+  );
+
   useEffect(() => {
-    const str = JSON.stringify({ showTestnets, showDeprecated });
+    const str = JSON.stringify({ showTestnets, showDeprecated, showFlagged });
     window.localStorage.setItem(LOCALSTORAGE_KEY, str);
-  }, [showTestnets, showDeprecated]);
+  }, [showTestnets, showDeprecated, showFlagged]);
 
   return (
     <SearchContext.Provider
@@ -39,6 +43,8 @@ export const SearchProvider = ({ children }) => {
         setShowTestnets,
         showDeprecated,
         setShowDeprecated,
+        showFlagged,
+        setShowFlagged
       }}
     >
       {children}
